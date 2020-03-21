@@ -4,9 +4,9 @@ const TopBar = () => {
   return (
     <nav className='navbar navbar-light'>
       <div>
-        <Link exact to='/' className='navbaar-brand'>
+        <NavLink exact to='/' className='navbaar-brand'>
           Medium
-        </Link>
+        </NavLink>
         <ul className='nav navbar-nav pull-xs-right'>
           <li className='nav-item'>
             <NavLink exact to='/' className='nav-link'>
@@ -14,12 +14,12 @@ const TopBar = () => {
             </NavLink>
           </li>
           <li className='nav-item'>
-            <NavLink exact to='/login' className='nav-link'>
+            <NavLink to='/login' className='nav-link'>
               Sign in
             </NavLink>
           </li>
           <li className='nav-item'>
-            <NavLink exact to='/register' className='nav-link'>
+            <NavLink to='/register' className='nav-link'>
               Sign up
             </NavLink>
           </li>
