@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
+
 const TopBar = () => {
   return (
     <nav className='navbar navbar-light'>
-      <div>
-        <NavLink exact to='/' className='navbaar-brand'>
+      <div className='container'>
+        <Link to='/' className='navbar-brand'>
           Medium
-        </NavLink>
+        </Link>
         <ul className='nav navbar-nav pull-xs-right'>
           <li className='nav-item'>
-            <NavLink exact to='/' className='nav-link'>
+            <NavLink to='/' className='nav-link' exact>
               Home
             </NavLink>
           </li>
