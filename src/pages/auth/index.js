@@ -4,10 +4,10 @@ import { Link, Redirect } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import { CurrentUserContext } from '../../contexts/currentUser';
+import BackendErrorMessages from './components/backendErrorMessages';
 
 const Authentication = props => {
   const isLogin = props.match.path === '/login';
-  console.log(props);
   const pageTitle = isLogin ? 'Sign in' : 'Sign up';
   const descriptionLink = isLogin ? '/register' : '/login';
   const descriptionText = isLogin ? 'Need an account?' : 'Have an account?';
@@ -15,13 +15,10 @@ const Authentication = props => {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [isSuccesfullSubmit, setIsSuccesfullSubmit] = useState(false);
-  const [{ isLoading, response }, doFetch] = useFetch('/users');
-  const [toket, setToket] = useLocalStorage('token');
-  const [currentUserState, setCurrentUserState] = useContext(
-    CurrentUserContext
-  );
+  const [{ isLoading, error, response }, doFetch] = useFetch('/users');
+  const [, setToket] = useLocalStorage('token');
+  const [, setCurrentUserState] = useContext(CurrentUserContext);
 
-  console.log(currentUserState);
   const handleSubmit = event => {
     event.preventDefault();
     const user = isLogin ? { email, password } : { email, password, username };
@@ -46,7 +43,7 @@ const Authentication = props => {
       isLoading: false,
       currentUser: response.user
     }));
-  }, [response, setToket]);
+  }, [response, setToket, setCurrentUserState]);
 
   if (isSuccesfullSubmit) {
     return <Redirect to='/' />;
@@ -62,6 +59,7 @@ const Authentication = props => {
               <Link to={descriptionLink}>{descriptionText}</Link>
             </p>
             <form onSubmit={handleSubmit}>
+              {error && <BackendErrorMessages backendErrors={error.errors} />}
               <fieldset>
                 {!isLogin && (
                   <fieldset className='form-group'>
