@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 
 import useFetch from '../../hooks/useFetch';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import { CurrentUserContext } from '../../contexts/currentUser';
 
 const Authentication = props => {
   const isLogin = props.match.path === '/login';
@@ -12,10 +14,14 @@ const Authentication = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [isSuccesfullSubmit, setIsSuccesfullSubmit] = useState(false);
+  const [{ isLoading, response }, doFetch] = useFetch('/users');
+  const [toket, setToket] = useLocalStorage('token');
+  const [currentUserState, setCurrentUserState] = useContext(
+    CurrentUserContext
+  );
 
-  const [{ isLoading, error, response }, doFetch] = useFetch('/users');
-  console.log('useFetch', isLoading, error, response);
-
+  console.log(currentUserState);
   const handleSubmit = event => {
     event.preventDefault();
     const user = isLogin ? { email, password } : { email, password, username };
@@ -27,6 +33,24 @@ const Authentication = props => {
     });
     console.log('values', email, password);
   };
+
+  useEffect(() => {
+    if (!response) {
+      return;
+    }
+    setToket(response.user.token);
+    setIsSuccesfullSubmit(true);
+    setCurrentUserState(state => ({
+      ...state,
+      isLoggedIn: true,
+      isLoading: false,
+      currentUser: response.user
+    }));
+  }, [response, setToket]);
+
+  if (isSuccesfullSubmit) {
+    return <Redirect to='/' />;
+  }
 
   return (
     <div className='auth-page'>
