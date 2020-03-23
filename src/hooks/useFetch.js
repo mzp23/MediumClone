@@ -16,6 +16,10 @@ export default url => {
   }, []);
 
   useEffect(() => {
+    if (!isLoading) {
+      return;
+    }
+
     const requestOptions = {
       ...options,
       ...{
@@ -24,9 +28,6 @@ export default url => {
         }
       }
     };
-    if (!isLoading) {
-      return;
-    }
 
     axios(baseUrl + url, requestOptions)
       .then(res => {

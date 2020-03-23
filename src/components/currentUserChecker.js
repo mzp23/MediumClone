@@ -4,7 +4,6 @@ import { CurrentUserContext } from '../contexts/currentUser';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 const CurrentUserChecker = ({ children }) => {
-  console.log(1);
   const [{ response }, doFetch] = useFetch('/user');
   const [, setCurrentUserState] = useContext(CurrentUserContext);
   const [token] = useLocalStorage('token');
@@ -13,7 +12,7 @@ const CurrentUserChecker = ({ children }) => {
     if (!token) {
       setCurrentUserState(state => ({
         ...state,
-        isLoginIn: false
+        isLoggedIn: false
       }));
       return;
     }
@@ -31,7 +30,7 @@ const CurrentUserChecker = ({ children }) => {
 
     setCurrentUserState(state => ({
       ...state,
-      isLoginIn: true,
+      isLoggedIn: true,
       isLoading: false,
       currentUser: response.user
     }));
