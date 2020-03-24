@@ -6,7 +6,7 @@ import Article from './pages/article';
 import Authentication from './pages/auth';
 import TagFeed from './pages/tagFeed'
 import YourFeed from './pages/yourFeed'
-import CreateArticle from 'createArticle';
+import CreateArticle from './pages/createArticle/'
 
 const Routes = () => {
   return (
