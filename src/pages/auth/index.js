@@ -5,6 +5,7 @@ import useFetch from '../../hooks/useFetch';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import { CurrentUserContext } from '../../contexts/currentUser';
 import BackendErrorMessages from './components/backendErrorMessages';
+import { SET_AUTHORIZED } from '../../contexts/types';
 
 const Authentication = props => {
   const isLogin = props.match.path === '/login';
@@ -17,7 +18,7 @@ const Authentication = props => {
   const [isSuccesfullSubmit, setIsSuccesfullSubmit] = useState(false);
   const [{ isLoading, error, response }, doFetch] = useFetch('/users');
   const [, setToket] = useLocalStorage('token');
-  const [, setCurrentUserState] = useContext(CurrentUserContext);
+  const [, dispatch] = useContext(CurrentUserContext);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -37,13 +38,8 @@ const Authentication = props => {
     }
     setToket(response.user.token);
     setIsSuccesfullSubmit(true);
-    setCurrentUserState(state => ({
-      ...state,
-      isLoggedIn: true,
-      isLoading: false,
-      currentUser: response.user
-    }));
-  }, [response, setToket, setCurrentUserState]);
+    dispatch({ type: SET_AUTHORIZED, payload: response.user })
+  }, [response, setToket, dispatch]);
 
   if (isSuccesfullSubmit) {
     return <Redirect to='/' />;
