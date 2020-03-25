@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import ErrorMessage from '../../components/errorMessage';
 import Loading from '../../components/loading';
 import TagList from '../../components/tagList';
-import CurrentUserContext from '../../contexts/currentUser';
+import { CurrentUserContext } from '../../contexts/currentUser';
 
 const Article = (props) => {
   const slug = props.match.params.slug;
