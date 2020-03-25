@@ -29,7 +29,6 @@ const Authentication = props => {
         user
       }
     });
-    console.log('values', email, password);
   };
 
   useEffect(() => {
