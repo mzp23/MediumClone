@@ -15,7 +15,7 @@ const Article = (props) => {
   const [isSuccessfullDelete, setisSuccessfullDelete] = useState(false);
 
   const isAuthor = () => {
-    if (!fetchArticleResponse || !currentUserState.isLoggedin) {
+    if (!fetchArticleResponse || !currentUserState.isLoggedIn) {
       return false;
     }
 
@@ -34,13 +34,18 @@ const Article = (props) => {
   }, [doFetch])
 
   useEffect(() => {
+    if (!deleteArticleResponse) {
+      return
+    }
+
     setisSuccessfullDelete(true)
   }, [deleteArticleResponse])
 
+  console.log(isSuccessfullDelete)
   if (isSuccessfullDelete) {
     return <Redirect to='/' />
   }
-
+  console.log(isAuthor())
   return (
     <div className='article-page'>
       <div className='banner'>
@@ -61,7 +66,7 @@ const Article = (props) => {
               </div>
               {isAuthor() && (
                 <span>
-                  <Link className='btn btn-outline-secondary btn-sm' to={`/article/${fetchArticleResponse.article.slug}/edit`}>
+                  <Link className='btn btn-outline-secondary btn-sm' to={`/articles/${fetchArticleResponse.article.slug}/edit`}>
                     <i className='ion-edit'></i>
                      Edit Article
                   </Link>

@@ -23,7 +23,7 @@ const Feed = ({ articles }) => {
                         <div className='pull-xs-right'>
                             <AddToFavorite
                                 isFavorited={article.favorited}
-                                favoritesCount={article.favoriteCount}
+                                favoritesCount={article.favoritesCount}
                                 articleSlug={article.slug}
                             />
                         </div>

@@ -6,7 +6,7 @@ const ArticleForm = ({ onSubmit, errors, initialValues }) => {
     const [body, setBody] = useState('');
     const [description, setDescription] = useState('');
     const [tagList, setTagList] = useState('');
-    console.log(title)
+
     useEffect(() => {
         if (!initialValues) {
             return

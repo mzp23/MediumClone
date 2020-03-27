@@ -15,14 +15,14 @@ const YourFeed = ({ location, match }) => {
   const stringifiedParams = stringify({
     limit,
     offset
-  })
+  });
   const apiUrl = `/articles/feed?${stringifiedParams}`;
   const [{ response, isLoading, error }, doFetch] = useFetch(apiUrl);
-  const url = match.url;
+  const currentUrl = match.url;
 
   useEffect(() => {
-    doFetch()
-  }, [doFetch, currentPage])
+    doFetch();
+  }, [doFetch, currentPage]);
 
   return (
     <div className='home-page'>
@@ -41,7 +41,12 @@ const YourFeed = ({ location, match }) => {
             {!isLoading && response && (
               <>
                 <Feed articles={response.articles} />
-                <Pagination total={response.articlesCount} limit={limit} url={url} currentPage={currentPage} />
+                <Pagination
+                  total={response.articlesCount}
+                  limit={limit}
+                  url={currentUrl}
+                  currentPage={currentPage}
+                />
               </>
             )}
           </div>
@@ -51,7 +56,7 @@ const YourFeed = ({ location, match }) => {
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default YourFeed;

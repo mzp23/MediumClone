@@ -17,8 +17,8 @@ const getApiUrl = ({ username, offset, isFavorites }) => {
     return `/articles?${stringify(params)}`;
 }
 
-const UserArticles = ({ username, isFavorites, location, url }) => {
-
+const UserArticles = ({ username, location, url }) => {
+    const isFavorites = location.pathname.includes('favorites');
     const { offset, currentPage } = getPaginator(location.search);
     const apiUrl = getApiUrl({ username, offset, isFavorites });
     const [{ response, error, isLoading }, doFetch] = useFetch(apiUrl);

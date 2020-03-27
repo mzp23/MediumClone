@@ -13,7 +13,7 @@ const AddToFavorite = ({ isFavorited, favoritesCount, articleSlug }) => {
 
     const isFavoritedWithResponse =
         response
-            ? response.article.isFavorited
+            ? response.article.favorited
             : isFavorited
 
     const buttonClasses = classNames({
@@ -24,7 +24,7 @@ const AddToFavorite = ({ isFavorited, favoritesCount, articleSlug }) => {
     })
 
     const handleLike = (event) => {
-        event.preventDefalut();
+        event.preventDefault();
         doFetch({
             method: isFavoritedWithResponse ? 'DELETE' : 'POST'
         })

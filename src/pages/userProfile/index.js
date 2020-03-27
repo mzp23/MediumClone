@@ -6,7 +6,7 @@ import UserArticles from '../../pages/userProfile/components/userArticles';
 
 const UserProfile = ({ match, location }) => {
     const slug = match.params.slug;
-    const isFavorites = location.pathname.inculdes('favorites');
+    const isFavorites = location.pathname.includes('favorites');
     const apiUrl = `/profiles/${slug}`
     const [{ response }, doFetch] = useFetch(apiUrl)
 
